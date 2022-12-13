@@ -74,6 +74,17 @@ void Order(float vector[], int left, int right){
         Order(vector,left,j);
 }
 
+int bin(int n){
+
+    if(n/2==0){
+        printf("%d",n%2);
+        return 0;
+    }
+    bin(n/2);
+    printf("%d",n%2);
+
+}
+
 int main(){
     int choice;
     float base;
@@ -86,6 +97,7 @@ int main(){
         printf("1 = Potenzialiation\n");
         printf("2 = Factorial\n");
         printf("3 = Several Numbers\n");
+        printf("4 = Binary Convertation\n");
         printf("0 = Exit\n");
         scanf("%d",&choice);
 
@@ -141,6 +153,16 @@ int main(){
                 printf("\nSum of the numbers: %.2f\n",Sum(array,number));
                 printf("Average of  the numbers: %.2f\n",Avarege(array,number,number));
 
+                break;
+
+            case 4:
+                //system("cls");
+                system("clear");
+
+                printf("Type it the number for convertion: ");
+                scanf("%d",&number);
+                printf("Your number converted: ");
+                bin(number);
                 break;
 
             default:
