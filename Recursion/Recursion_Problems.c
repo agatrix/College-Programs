@@ -85,10 +85,19 @@ int bin(int n){
 
 }
 
+int gcd(int n1,int n2){
+    
+    if(n2!=0)
+        return gcd(n2,n1%n2);
+    else   
+        return n1;
+    
+}
+
 int main(){
     int choice;
     float base;
-    int number, exponent;
+    int number, n1, n2, exponent;
     float *array;
 
 
@@ -98,6 +107,7 @@ int main(){
         printf("2 = Factorial\n");
         printf("3 = Several Numbers\n");
         printf("4 = Binary Convertation\n");
+        printf("5 - Greatest Common Divisor\n");
         printf("0 = Exit\n");
         scanf("%d",&choice);
 
@@ -163,6 +173,16 @@ int main(){
                 scanf("%d",&number);
                 printf("Your number converted: ");
                 bin(number);
+                break;
+
+            case 5:
+                //system("cls");
+                system("clear");
+
+                printf("Type it how many numbers: ");
+                scanf("%d%d",&n1,&n2);
+                
+                printf("The GCD numbers is: %d",gcd(n1,n2));
                 break;
 
             default:
