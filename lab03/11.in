@@ -1,0 +1,14 @@
+le_polinomio A
+1
+1 6
+imprime A
+le_polinomio B
+1 1 3
+soma C = A + B
+imprime C
+le_polinomio D
+1 1 7
+soma C = A + D
+imprime C
+imprime A
+imprime D
