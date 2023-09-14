@@ -10,5 +10,5 @@ le_polinomio D
 1 1 7
 soma C = A + D
 imprime C
-imprime A
-imprime D
+zera C
+imprime C
