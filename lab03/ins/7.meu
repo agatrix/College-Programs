@@ -1,0 +1,10 @@
+Definido A [ 1 ] = 6 .
+[(1,6)]
+Definido B [ 1 ] = 3 .
+Somado C = A + B .
+[(1,9)]
+Definido D [ 1 ] = 7 .
+1 xSomado C = A + D .
+[(1,13)]
+Zerado C.
+[]
