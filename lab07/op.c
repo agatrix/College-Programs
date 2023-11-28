@@ -28,7 +28,7 @@ int main(){
     while(scanf("%s%d",y,&x)>1){
         printf("%s %d ",y,x); 
     }
-
+    printf("a");
     return 0;
 }
 
