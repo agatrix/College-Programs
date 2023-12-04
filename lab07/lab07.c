@@ -31,8 +31,8 @@ Arvore Desempilha(Pilha *p);
 
 Arvore Add_Arv(Arvore esquerda, Arvore meio, Arvore direita);
 
-void Percorre_Pre(Arvore raiz);
-void Percorre_Pos(Arvore raiz);
+void Percorre_Pre(Arvore raiz, int x);
+void Percorre_Pos(Arvore raiz, int x);
 int Prioridade(char y[]);
 
 /*MAIN*/
@@ -50,18 +50,22 @@ int main()
     Empilha(&p, raiz);
     while (scanf("%s%d", y, &x) > 1)
     {
-        if (prio > Prioridade(y))
+        while (prio >= Prioridade(y))
         {
             Arvore direita = Desempilha(&p);
             Arvore meio = Desempilha(&p);
             Arvore esquerda = Desempilha(&p);
             Empilha(&p, Add_Arv(esquerda, meio, direita));
             raiz = meio;
+            if (p->topo->topo != NULL)               // Checa se possui mais operações, se true
+                prio = Prioridade((p)->topo->a->op); // Armazena a prioridade do sinal
+            else
+                break; // se false, é o último elemento, então sai do while
         }
-        prio = Prioridade(y);
+        // vai sair do while,no caso da prio do sinal atual for maior que a prio do sinal na pilha
         Empilha(&p, Cria_No_Arv(y, x, true));
         Empilha(&p, Cria_No_Arv(y, x, false));
-
+        prio = Prioridade(y);
     }
 
     while ((p)->topo->topo != NULL)
@@ -69,16 +73,15 @@ int main()
         Arvore direita = Desempilha(&p);
         Arvore meio = Desempilha(&p);
         Arvore esquerda = Desempilha(&p);
-        printf("HHH%sHHH",meio->op);
         Empilha(&p, Add_Arv(esquerda, meio, direita));
         raiz = meio;
     }
-    
-    Percorre_Pre(raiz);
+
+    Percorre_Pre(raiz, 0);
     printf("\n");
-    Percorre_Pos(raiz);
+    Percorre_Pos(raiz, 0);
     printf("\n");
-    printf("%d ",raiz->resultado);
+    printf("%d\n", raiz->resultado);
 
     return 0;
 }
@@ -129,10 +132,6 @@ Arvore Desempilha(Pilha *p)
     Pilha remove = *p;
     Arvore no = (*p)->a;
     *p = (*p)->topo;
-    /*if (remove->a->op[0] == '.')
-        printf("%d ", remove->a->resultado);
-    else
-        printf("%s ", remove->a->op);*/
     free(remove);
     return no;
 }
@@ -165,35 +164,46 @@ Arvore Add_Arv(Arvore esquerda, Arvore meio, Arvore direita)
     return meio;
 }
 
-void Percorre_Pre(Arvore raiz)
+// Printa Raiz, depois Nó_Esq e por último Nó_Dir
+void Percorre_Pre(Arvore raiz, int x)
 {
 
     if (raiz == NULL)
         return;
     if (raiz->op[0] != '.')
-        printf("%s ", raiz->op);
+        if (x != 0)
+            printf(" %s", raiz->op);
+        else
+            printf("%s", raiz->op);
     else
-        printf("%d ", raiz->resultado);
+        printf(" %d", raiz->resultado);
 
-    Percorre_Pre(raiz->esq);
-    Percorre_Pre(raiz->dir);
+    Percorre_Pre(raiz->esq, 1);
+    Percorre_Pre(raiz->dir, 1);
 }
 
-void Percorre_Pos(Arvore raiz)
+// Printa Nó_Esq, Nó_Dir e por último a Raiz
+void Percorre_Pos(Arvore raiz, int x)
 {
     if (raiz == NULL)
+    {
         return;
-    Percorre_Pos(raiz->esq);
-    Percorre_Pos(raiz->dir);
-    
-    if (raiz->op[0] != '.')
-        printf("%s ", raiz->op);
+    }
+    Percorre_Pos(raiz->esq, 1);
+    Percorre_Pos(raiz->dir, 1);
+
+    if (x == 1)
+        if (raiz->op[0] != '.')
+            printf("%s ", raiz->op);
+        else
+            printf("%d ", raiz->resultado);
     else
-        printf("%d ", raiz->resultado);
+        printf("%s", raiz->op);
 }
 
 int Prioridade(char y[])
 {
+
     if (y[0] == '*' || y[0] == '/')
         return 3;
     if (y[0] == '+' || y[0] == '-')
