@@ -52,30 +52,40 @@ public:
        return;
    }
 
+   void imprime(ListaEncAluno &lista){
+        Nodo * aux;
+        aux = lista.primeiroNodo;
+        while(aux){           
+            cout << aux->aluno.nome << endl;
+            aux = aux->prox;
+        }
+        
+   }
+
    ~ListaEncAluno(){
         Nodo * Atual = primeiroNodo;
         Nodo * prox;
         while(Atual){
            prox = Atual->prox;
            delete Atual;
-            Atual = prox;
+           Atual = prox;
         }
     }
 };
 
 
 int main(){
-    int x; string y;
-    cout << "Hello World!" << endl;
     Aluno a;
     Aluno b(123, "Agatha");
     Aluno c;
+    ListaEncAluno lista;
+    lista.insere(b);
+    
     cin >> c.nome;
     cin >> c.matricula;
-    cout << a.nome << endl;
-    cout << b.nome << endl;
-    cout << c.nome << endl;
-    cout << c.matricula << endl;
+    lista.insere(c);
+    lista.insere(a);
+    lista.imprime(lista);
     return 0;
 
 }
