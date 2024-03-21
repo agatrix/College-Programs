@@ -18,6 +18,8 @@ public:
         matricula = -1;
         nome = "Indefino";
     }
+
+    
 };
 
 class Nodo{
@@ -49,6 +51,8 @@ public:
 
             ultimoNodo->prox = novoNodo;
        }
+
+       
        return;
    }
 
