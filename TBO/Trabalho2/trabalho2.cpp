@@ -1,4 +1,6 @@
 #include<iostream>
+#include <cstdlib>
+#include <time.h>
 
 #define MAX 300
 using namespace std;
@@ -23,6 +25,7 @@ public:
                 vet[j] = 1+(rand()%1000);
 
             //manda o vetor pra função
+            
         }
     }
 };
@@ -48,6 +51,33 @@ void insertSort(int vet[], int quantidade){
     cout << numAcesso << endl;
 }
 
+void swap(int vet[], int x, int y, int numAcesso){
+    int aux = vet[x];
+    vet[x] = vet[y];
+    vet[y] = aux;
+    numAcesso+=3;
+
+}
+
+
+void SelectSort(int vet[], int quantidade){
+    int numAcesso = 0, atualIndex;
+
+    for(int i=0; i<quantidade-1;i++){
+        atualIndex = i;
+        for(int j=i+1;j<quantidade;j++){
+            if(vet[j]<vet[atualIndex])
+                atualIndex = j;
+        }
+        if(i!=atualIndex)
+            swap(vet,i,atualIndex,numAcesso);
+
+        for(int k=0; k<quantidade;k++){
+            cout << vet[k] << " ";
+        }
+        cout << endl;
+    }
+}
 
 
 int main(){
@@ -56,7 +86,7 @@ int main(){
     
     listaEst.insere(listaEst.vet);
 
-    insertSort(listaEst.vet,listaEst.quantidade);
-  
+    //insertSort(listaEst.vet,listaEst.quantidade);
+    //SelectSort(listaEst.vet,listaEst.quantidade);
     return 0;
 }
