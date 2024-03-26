@@ -1,46 +1,20 @@
 #include<iostream>
-#include <cstdlib>
-#include <time.h>
-#include <fstream>
+#include<cstdlib>
+#include<fstream>
 
 #define MAX 300
 using namespace std;
 
-class ListaFisica {
-public:
-    int vet[MAX];
-    int quantidade = 0;
-
-    ListaFisica(){} //Construtor Vazio
-    ~ListaFisica(){} //Destrutor 
-
-    void insere(int vet[]){
-        while(scanf("%d",&vet[quantidade])>0){
-            quantidade++;
-        }
-    }
-
-    void insereRandom(int vet[]){
-        for(int i=1; i<=100;i++){
-            for(int j=0; j<i; j++)
-                vet[j] = 1+(rand()%1000);
-
-            //manda o vetor pra função
-
-        }
-    }
-};
-
 void escritaArquivo(int numAcesso, int selecao){
     ofstream myStream;
     if(selecao==1)
-        myStream.open("InsertSortAcess.txt");
-    else
-        myStream.open("SelectionSortAcess.txt");
-    
+        myStream.open("InsertSortAcess.txt", ios::ate);
+    else{
+        if(myStream.is_open()==false){
+            myStream.open("SelectionSortAcess.txt", ios::ate);}
+    }
     myStream << numAcesso;
     myStream << " ";
-    myStream.close();
 }
 
 void insertSort(int vet[], int quantidade){
@@ -70,7 +44,6 @@ void swap(int vet[], int x, int y, int *numAcesso){
     vet[x] = vet[y];
     vet[y] = aux;
     *numAcesso+=3;
-
 }
 
 
@@ -95,14 +68,52 @@ void selectionSort(int vet[], int quantidade){
     escritaArquivo(numAcesso,2);
 }
 
+class ListaFisica {
+public:
+    int vet[MAX];
+    int quantidade = 0;
+
+    ListaFisica(){} //Construtor Vazio
+    ~ListaFisica(){} //Destrutor 
+
+    void insere(int vet[]){
+        while(scanf("%d",&vet[quantidade])>0){
+            quantidade++;
+        }
+    }
+
+    void insereRandom(int vet[]){
+        for(int i=1; i<=100;i++){
+            srand(i+12312);   //Dessa forma alimenta a seed com um valor diferente em cada
+            for(int j=0; j<i; j++){
+                vet[j] = 1+(rand()%1000);
+            }
+            selectionSort(vet,i);
+        }
+    }
+};
+
+
 
 int main(){
 
     ListaFisica listaEst;
-    
-    listaEst.insere(listaEst.vet);
+    int escolha;
+    cin >> escolha;
+    //listaEst.insere(listaEst.vet);
+    listaEst.insereRandom(listaEst.vet);
 
-    insertSort(listaEst.vet,listaEst.quantidade);
-    selectionSort(listaEst.vet,listaEst.quantidade);
+    switch (escolha)
+    {
+    case 1:
+        //insertSort(listaEst.vet,listaEst.quantidade);
+        break;
+    case 2:
+        
+        //selectionSort(listaEst.vet,listaEst.quantidade);
+        break;
+    }
+   
+    
     return 0;
 }
