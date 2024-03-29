@@ -25,7 +25,7 @@
 		<ponto x="4" y="4"/>
 		<ponto x="2" y="6"/>
 	</reta>
-
+	
 	<poligono>
 		<ponto x="1.0" y="1.0"/>
 		<ponto x="1.0" y="2.0"/>
@@ -33,6 +33,5 @@
 		<ponto x="2.0" y="1.0"/>
 		<!-- <ponto> adicionais -->
 	</poligono>
-
 
 </dados>
