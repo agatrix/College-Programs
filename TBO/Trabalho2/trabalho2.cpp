@@ -5,19 +5,19 @@
 #define MAX 300
 using namespace std;
 
-void escritaArquivo(int numAcesso, int selecao){
+//Função comentada para discutir com o professor
+/*void escritaArquivo(int numAcesso, int selecao){
     ofstream myStream;
     if(selecao==1)
         myStream.open("InsertSortAcess.txt", ios::ate);
     else{
-        if(myStream.is_open()==false){
-            myStream.open("SelectionSortAcess.txt", ios::ate);}
+        myStream.open("SelectionSortAcess.txt", ios::ate);
     }
     myStream << numAcesso;
     myStream << " ";
-}
+}*/
 
-void insertSort(int vet[], int quantidade){
+int insertSort(int vet[], int quantidade){
     int valor, j, numAcesso=0;
     for(int i=1; i<quantidade;i++){
         valor = vet[i];
@@ -36,7 +36,8 @@ void insertSort(int vet[], int quantidade){
         cout << endl;
     }
     cout << numAcesso << endl;
-    escritaArquivo(numAcesso,1);
+    // escritaArquivo(numAcesso,1);
+    return numAcesso;
 }
 
 void swap(int vet[], int x, int y, int *numAcesso){
@@ -47,7 +48,7 @@ void swap(int vet[], int x, int y, int *numAcesso){
 }
 
 
-void selectionSort(int vet[], int quantidade){
+int selectionSort(int vet[], int quantidade){
     int numAcesso = 0, atualIndex;
 
     for(int i=0; i<quantidade-1;i++){
@@ -56,7 +57,8 @@ void selectionSort(int vet[], int quantidade){
             if(vet[j]<vet[atualIndex])
                 atualIndex = j;
         }
-        if(i!=atualIndex)
+        //Condição para não ter que fazer acesso desnecessário
+        if(i!=atualIndex) 
             swap(vet,i,atualIndex,&numAcesso);
 
         for(int k=0; k<quantidade;k++){
@@ -65,7 +67,8 @@ void selectionSort(int vet[], int quantidade){
         cout << endl;
     }
     cout << numAcesso << endl;
-    escritaArquivo(numAcesso,2);
+    // escritaArquivo(numAcesso,2);
+    return numAcesso;
 }
 
 class ListaFisica {
@@ -82,13 +85,26 @@ public:
         }
     }
 
-    void insereRandom(int vet[]){
+    void insereRandom(int vet[],int escolha){
+        ofstream myStream;
+        if(escolha==1)
+            myStream.open("InsertSortAcess.txt", ios::ate);
+        else{
+            myStream.open("SelectionSortAcess.txt", ios::ate);
+        }
+
         for(int i=1; i<=100;i++){
             srand(i+12312);   //Dessa forma alimenta a seed com um valor diferente em cada
             for(int j=0; j<i; j++){
                 vet[j] = 1+(rand()%1000);
             }
-            selectionSort(vet,i);
+            if(escolha==1){
+                myStream << insertSort(vet,i);
+                myStream << endl;
+            }else{
+                myStream << selectionSort(vet,i);
+                myStream << endl;
+            }
         }
     }
 };
@@ -98,18 +114,25 @@ public:
 int main(){
 
     ListaFisica listaEst;
-    int escolha;
-    cin >> escolha;
-    //listaEst.insere(listaEst.vet);
-    listaEst.insereRandom(listaEst.vet);
+    int escolhaTipoLista, escolhaOrdenacao;
+    cin >> escolhaTipoLista;
+    cin >> escolhaOrdenacao;
+    
+    
 
-    switch (escolha)
+    switch (escolhaTipoLista)
     {
     case 1:
-        //insertSort(listaEst.vet,listaEst.quantidade);
+        listaEst.insere(listaEst.vet);
+        
+        if(escolhaOrdenacao==1)
+            insertSort(listaEst.vet,listaEst.quantidade);
+        else
+            selectionSort(listaEst.vet,listaEst.quantidade);
+
         break;
     case 2:
-        
+        listaEst.insereRandom(listaEst.vet,escolhaOrdenacao);
         //selectionSort(listaEst.vet,listaEst.quantidade);
         break;
     }
