@@ -5,18 +5,6 @@
 #define MAX 300
 using namespace std;
 
-//Função comentada para discutir com o professor
-/*void escritaArquivo(int numAcesso, int selecao){
-    ofstream myStream;
-    if(selecao==1)
-        myStream.open("InsertSortAcess.txt", ios::ate);
-    else{
-        myStream.open("SelectionSortAcess.txt", ios::ate);
-    }
-    myStream << numAcesso;
-    myStream << " ";
-}*/
-
 int insertSort(int vet[], int quantidade){
     int valor, j, numAcesso=0;
     for(int i=1; i<quantidade;i++){
@@ -24,8 +12,9 @@ int insertSort(int vet[], int quantidade){
         numAcesso++;
         j = i-1;
         while(valor < vet[j] && j>=0){
-            vet[j+1] = vet[j];
             numAcesso++;
+            vet[j+1] = vet[j];
+            numAcesso+=2;
             j--;   
         }
         vet[j+1] = valor;
@@ -55,11 +44,12 @@ int selectionSort(int vet[], int quantidade){
         atualIndex = i;
         for(int j=i+1;j<quantidade;j++){
             if(vet[j]<vet[atualIndex])
+                numAcesso+=2;
                 atualIndex = j;
         }
         //Condição para não ter que fazer acesso desnecessário
-        if(i!=atualIndex) 
-            swap(vet,i,atualIndex,&numAcesso);
+        //if(i!=atualIndex) Não é necessário a adição desse if, por ser uma ondição rara
+        swap(vet,i,atualIndex,&numAcesso);
 
         for(int k=0; k<quantidade;k++){
             cout << vet[k] << " ";
@@ -106,6 +96,7 @@ public:
                 myStream << endl;
             }
         }
+        myStream.close();
     }
 };
 
@@ -133,7 +124,6 @@ int main(){
         break;
     case 2:
         listaEst.insereRandom(listaEst.vet,escolhaOrdenacao);
-        //selectionSort(listaEst.vet,listaEst.quantidade);
         break;
     }
    
